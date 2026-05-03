@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Menu;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
+
+class MenuController extends Controller
+{
+    public function index(): View
+    {
+        $menus = Menu::latest()->paginate(10);
+
+        return view('admin.menus.index', compact('menus'));
+    }
+
+    public function create(): View
+    {
+        return view('admin.menus.create', ['menu' => new Menu()]);
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $data = $this->validatedData($request);
+        $data['gambar'] = $this->uploadImage($request);
+
+        Menu::create($data);
+
+        return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil ditambahkan.');
+    }
+
+    public function edit(Menu $menu): View
+    {
+        return view('admin.menus.edit', compact('menu'));
+    }
+
+    public function update(Request $request, Menu $menu): RedirectResponse
+    {
+        $data = $this->validatedData($request);
+        $image = $this->uploadImage($request);
+
+        if ($image !== null) {
+            $this->deleteImage($menu);
+            $data['gambar'] = $image;
+        }
+
+        $menu->update($data);
+
+        return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil diperbarui.');
+    }
+
+    public function destroy(Menu $menu): RedirectResponse
+    {
+        $this->deleteImage($menu);
+        $menu->delete();
+
+        return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil dihapus.');
+    }
+
+    public function toggle(Menu $menu): RedirectResponse
+    {
+        $menu->update([
+            'status' => $menu->status === 'tersedia' ? 'tidak_tersedia' : 'tersedia',
+        ]);
+
+        return back()->with('success', 'Status ketersediaan menu berhasil diubah.');
+    }
+
+    private function validatedData(Request $request): array
+    {
+        return $request->validate([
+            'nama_menu' => ['required', 'string', 'max:255'],
+            'kategori' => ['required', 'string', 'max:100'],
+            'harga' => ['required', 'numeric', 'min:0'],
+            'deskripsi' => ['nullable', 'string'],
+            'status' => ['required', 'in:tersedia,tidak_tersedia'],
+            'gambar' => ['nullable', 'image', 'max:2048'],
+        ]);
+    }
+
+    private function uploadImage(Request $request): ?string
+    {
+        if (! $request->hasFile('gambar')) {
+            return null;
+        }
+
+        $file = $request->file('gambar');
+        File::ensureDirectoryExists(public_path('uploads/menu'));
+
+        $baseName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $name = time() . '-' . Str::slug($baseName) . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('uploads/menu'), $name);
+
+        return 'uploads/menu/' . $name;
+    }
+
+    private function deleteImage(Menu $menu): void
+    {
+        if ($menu->gambar && File::exists(public_path($menu->gambar))) {
+            File::delete(public_path($menu->gambar));
+        }
+    }
+}
