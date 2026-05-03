@@ -4,19 +4,58 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', config('app.name'))</title>
+    
+    <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/all.css') }}">
+    
+    <!-- Tambahkan CDN FontAwesome 5 agar ikon Award & Clock pasti muncul -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        body { background: #f7f5f0; color: #2f2f2f; }
-        .site-nav { background: #7a2f20; border: 0; border-radius: 0; margin-bottom: 0; }
-        .site-nav .navbar-brand, .site-nav .navbar-nav > li > a { color: #fff; }
-        .site-hero { background: #8f3b28; color: #fff; padding: 48px 0; }
-        .site-hero h1 { font-weight: 700; margin-top: 0; }
-        .menu-card { background: #fff; border: 1px solid #e4ded4; border-radius: 4px; margin-bottom: 20px; min-height: 290px; overflow: hidden; }
-        .menu-card img { width: 100%; height: 160px; object-fit: cover; background: #ddd; }
-        .menu-card .body { padding: 15px; }
-        .price { color: #7a2f20; font-weight: 700; }
-        .section { padding: 32px 0; }
-        .footer { background: #2f2f2f; color: #ddd; padding: 20px 0; margin-top: 32px; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #ffffff; 
+            color: #1a2e1a; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Memberikan jarak otomatis agar konten tidak nempel ke footer */
+        main { 
+            flex: 1; 
+            padding-bottom: 50px; /* Jarak konten ke bagian reservasi/footer */
+        }
+
+        .site-nav { 
+            background: #064e3b; 
+            border: 0; border-radius: 0; margin-bottom: 0; padding: 10px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .site-nav .navbar-brand { font-weight: 800; color: #fff !important; }
+        .site-nav .navbar-nav > li > a { color: #dcfce7 !important; font-weight: 600; }
+        .site-nav .navbar-nav > .active > a { color: #4ade80 !important; background: transparent !important; }
+
+        /* Reservasi Section Simpel */
+        .simple-cta {
+            background: #f0fdf4;
+            border-top: 1px solid #dcfce7;
+            padding: 25px 0;
+            margin-top: auto; /* Memastikan ini berada di bawah */
+        }
+        .btn-wa-small {
+            background: #16a34a;
+            color: white !important;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 600;
+            text-decoration: none !important;
+        }
+
+        .footer { background: #052e16; color: #86efac; padding: 20px 0; }
     </style>
     @stack('styles')
 </head>
@@ -24,24 +63,47 @@
     <nav class="navbar navbar-default site-nav">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name') }}</a>
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    <i class="fas fa-utensils"></i> {{ config('app.name') }}
+                </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li class="{{ request()->routeIs('home') ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a></li>
-                <li class="{{ request()->routeIs('menu.index') ? 'active' : '' }}"><a href="{{ route('menu.index') }}">Menu</a></li>
+                <li class="{{ request()->routeIs('home') ? 'active' : '' }}"><a href="{{ route('home') }}">Beranda</a></li>
+                <li class="{{ request()->routeIs('menu.*') ? 'active' : '' }}"><a href="{{ route('menu.index') }}">Menu</a></li>
                 <li><a href="{{ route('login') }}">Admin</a></li>
             </ul>
         </div>
     </nav>
 
-    @yield('content')
+    <!-- Bungkus Yield dengan Main untuk kontrol jarak -->
+    <main>
+        @yield('content')
+    </main>
+
+    <section class="simple-cta">
+        <div class="container">
+            <div class="row" style="display: flex; align-items: center; flex-wrap: wrap;">
+                <div class="col-xs-12 col-sm-8">
+                    <h5 style="margin: 0; font-weight: 700; color: #064e3b;">
+                        <i class="fas fa-calendar-check"></i> Reservasi & Pesanan Box
+                    </h5>
+                    <p class="text-muted mb-0 small">Siap melayani pesanan untuk acara keluarga dan kantor.</p>
+                </div>
+                <div class="col-xs-12 col-sm-4 text-right">
+                    <a href="https://wa.me/628123456789" class="btn-wa-small shadow-sm">
+                        <i class="fab fa-whatsapp"></i> Chat WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer class="footer">
-        <div class="container">
-            <strong>{{ config('app.name') }}</strong>
-            <span class="pull-right">Informasi menu warung makan</span>
+        <div class="container text-center">
+            <p class="mb-0 small"><strong>{{ config('app.name') }}</strong> &copy; {{ date('Y') }}</p>
         </div>
     </footer>
+
     <script src="{{ asset('vendor/adminlte/js/app.js') }}"></script>
 </body>
 </html>
