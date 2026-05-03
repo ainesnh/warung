@@ -4,37 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
-        $menus = $this->availableMenus(limit: 6);
+        $menus = $this->getAvailableMenus(limit: 6);
+        $specialMenus = $this->getSpecialMenus(limit: 1);
 
-        return view('home', compact('menus'));
+        return view('home', compact('menus', 'specialMenus'));
     }
 
     public function menu(): View
     {
-        $menus = $this->availableMenus();
+        $menus = $this->getAvailableMenus(paginate: 12);
 
         return view('menu.index', compact('menus'));
     }
 
-    private function availableMenus(?int $limit = null): Collection
+    private function getAvailableMenus(?int $limit = null, ?int $paginate = null)
     {
         try {
-            $query = Menu::tersedia()
-                ->orderBy('kategori')
-                ->orderBy('nama_menu');
+            $query = Menu::tersedia()->orderBy('kategori')->orderBy('nama_menu');
 
-            if ($limit !== null) {
-                $query->limit($limit);
-            }
-
+            if ($limit) return $query->limit($limit)->get();
+            if ($paginate) return $query->paginate($paginate);
+            
             return $query->get();
+        } catch (QueryException) {
+            return collect();
+        }
+    }
+
+    private function getSpecialMenus(int $limit = 3)
+    {
+        try {
+            return Menu::tersedia()
+                ->where('is_special', 1)
+                ->limit($limit)
+                ->get();
         } catch (QueryException) {
             return collect();
         }

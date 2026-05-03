@@ -18,6 +18,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::patch('/menus/{menu}/toggle', [AdminMenuController::class, 'toggle'])->name('menus.toggle');
+    Route::patch('/menus/{menu}/toggle-status', [AdminMenuController::class, 'toggleStatus'])->name('menus.toggle-status');
+    Route::patch('/menus/{menu}/toggle-special', [AdminMenuController::class, 'toggleSpecial'])->name('menus.toggle-special');
     Route::resource('menus', AdminMenuController::class)->except(['show']);
 });

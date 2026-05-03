@@ -16,6 +16,7 @@ class Menu extends Model
         'deskripsi',
         'gambar',
         'status',
+        'is_special',
     ];
 
     protected function casts(): array
@@ -27,6 +28,6 @@ class Menu extends Model
 
     public function scopeTersedia($query)
     {
-        return $query->where('status', 'tersedia');
+        return $query->where('status', 1);
     }
 }

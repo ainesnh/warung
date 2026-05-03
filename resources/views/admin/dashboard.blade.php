@@ -96,7 +96,7 @@
                                         Rp {{ number_format($menu->harga, 0, ',', '.') }}
                                     </td>
                                     <td style="padding: 12px 15px;" class="text-center">
-                                        @if($menu->status === 'tersedia')
+                                        @if($menu->status == 1)
                                             <span class="badge bg-green" style="padding: 5px 12px; border-radius: 50px;">Tersedia</span>
                                         @else
                                             <span class="badge bg-red" style="padding: 5px 12px; border-radius: 50px;">Kosong</span>

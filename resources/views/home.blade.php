@@ -13,7 +13,7 @@
         </div>
     </section>
 
-    <!-- Menu Hari Ini Section -->
+    <!-- Menu Hari Ini Section (is_special = 1) -->
     <section id="menu-hari-ini" style="background-color: #f0fdf4; padding: 100px 0;">
         <div class="container">
             <div class="text-center mb-5">
@@ -23,18 +23,18 @@
             </div>
 
             <div class="row">
-                @forelse ($menus->take(3) as $menu)
+                @forelse ($specialMenus as $menu)
                     <div class="col-sm-6 col-md-4 mb-4">
                         <div class="card h-100 border-0 shadow-sm hover-shadow" style="transition: 0.4s; border-radius: 20px; overflow: hidden; background: #fff;">
-                            <div class="special-tag" style="position: absolute; top: 15px; left: 15px; z-index: 10; background: #ffc107; color: #000; padding: 5px 15px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                Best Seller
-                            </div>
                             @include('menu.partials.card', ['menu' => $menu])
                         </div>
                     </div>
                 @empty
                     <div class="col-md-12 text-center">
-                        <p class="text-muted italic">Menu spesial hari ini sedang disiapkan.</p>
+                        <div class="p-5" style="border: 2px dashed #c3e6cb; border-radius: 20px;">
+                            <i class="fas fa-concierge-bell fa-3x text-muted mb-3" style="opacity: 0.3;"></i>
+                            <p class="text-muted italic">Menu spesial hari ini sedang disiapkan.</p>
+                        </div>
                     </div>
                 @endforelse
             </div>
@@ -44,15 +44,13 @@
     <!-- Semua Menu Section -->
     <section class="section-all-menu" style="padding: 100px 0; background: #fff;">
         <div class="container">
-            <!-- Row ini menggunakan flexbox untuk memastikan tombol terdorong ke kanan -->
-            <div class="row mb-5" style="display: flex; align-items: center; justify-content:建设-between; flex-wrap: wrap;">
+            <div class="row mb-5 align-items-center">
                 <div class="col-md-7">
                     <h2 style="font-weight: 800; color: #064e3b; margin: 0;">Daftar Menu Lengkap</h2>
                     <div style="width: 60px; height: 5px; background: #16a34a; border-radius: 10px; margin-top: 10px; margin-bottom: 15px;"></div>
                     <p class="text-muted">Temukan berbagai hidangan lezat lainnya untuk memanjakan lidah Anda.</p>
                 </div>
-                <!-- Menggunakan text-right dan padding-right agar benar-benar mepet kanan -->
-                <div class="col-md-5 text-right" style="padding-right: 15px;">
+                <div class="col-md-5 text-right mobile-left">
                     <a href="{{ route('menu.index') }}" class="btn-explore">
                         <span>Jelajahi Semua Menu</span>
                         <i class="fas fa-arrow-right"></i>
@@ -61,6 +59,7 @@
             </div>
 
             <div class="row">
+                {{-- Menggunakan variabel $menus dari Controller --}}
                 @forelse ($menus as $menu)
                     <div class="col-sm-6 col-md-4 mb-4">
                         <div class="card h-100 border-0 shadow-sm hover-shadow" style="transition: 0.4s; border-radius: 20px; overflow: hidden; border: 1px solid #f0f0f0 !important;">
@@ -136,8 +135,7 @@
     @media (max-width: 768px) {
         .site-hero h1 { font-size: 2.5rem; }
         #menu-hari-ini, .section-all-menu { padding: 60px 0 !important; }
-        /* Di mobile, tombol kembali ke tengah atau kiri agar rapi */
-        .text-right { text-align: left !important; margin-top: 15px; }
+        .mobile-left { text-align: left !important; margin-top: 15px; }
     }
 </style>
 @endpush

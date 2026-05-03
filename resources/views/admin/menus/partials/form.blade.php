@@ -1,5 +1,5 @@
 <div class="box-body" style="padding: 20px;">
-    {{-- Alert Error yang lebih elegan --}}
+    {{-- Alert Error --}}
     @if ($errors->any())
         <div class="alert alert-dismissible" style="background-color: #fef2f2; border-left: 5px solid #dc2626; color: #991b1b;">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -55,28 +55,38 @@
     </div>
 
     <div class="row">
-        {{-- Status --}}
-        <div class="col-md-6">
+        {{-- Status Ketersediaan (Boolean 1/0) --}}
+        <div class="col-md-4">
             <div class="form-group">
-                <label for="status" style="color: #064e3b;"><i class="fa fa-check-square"></i> Status Ketersediaan</label>
+                <label for="status" style="color: #064e3b;"><i class="fa fa-check-square"></i> Status</label>
                 <select name="status" id="status" class="form-control" style="border-radius: 4px;" required>
-                    <option value="tersedia" @selected(old('status', $menu->status ?: 'tersedia') === 'tersedia')>Tersedia</option>
-                    <option value="tidak_tersedia" @selected(old('status', $menu->status) === 'tidak_tersedia')>Tidak tersedia</option>
+                    <option value="1" @selected(old('status', $menu->exists ? $menu->status : 1) == 1)>Tersedia</option>
+                    <option value="0" @selected(old('status', $menu->exists ? $menu->status : 1) == 0)>Habis</option>
                 </select>
             </div>
         </div>
+
+        {{-- Menu Spesial (Baru) --}}
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="is_special" style="color: #064e3b;"><i class="fa fa-star"></i> Spesial Hari Ini?</label>
+                <select name="is_special" id="is_special" class="form-control" style="border-radius: 4px;" required>
+                    <option value="0" @selected(old('is_special', $menu->is_special) == 0)>Tidak</option>
+                    <option value="1" @selected(old('is_special', $menu->is_special) == 1)>Ya, Tampilkan di Spesial</option>
+                </select>
+            </div>
+        </div>
+
         {{-- Upload Gambar --}}
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="gambar" style="color: #064e3b;"><i class="fa fa-camera"></i> Gambar Menu</label>
                 <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*" style="border: none; padding: 0;">
                 
                 @if ($menu->gambar)
                     <div style="margin-top: 10px; padding: 8px; background: #f9fafb; border-radius: 4px; border: 1px dashed #d1d5db;">
-                        <small class="text-muted"><i class="fa fa-paperclip"></i> File saat ini: {{ basename($menu->gambar) }}</small>
+                        <small class="text-muted"><i class="fa fa-paperclip"></i> Ada file terpasang</small>
                     </div>
-                @else
-                    <p class="help-block small">Format: JPG, PNG, WEBP (Maks. 2MB)</p>
                 @endif
             </div>
         </div>
@@ -91,15 +101,3 @@
         <i class="fa fa-save"></i> Simpan Menu
     </button>
 </div>
-
-<style>
-    /* Fokus input dengan warna hijau khas tema */
-    .form-control:focus {
-        border-color: #4ade80 !important;
-        box-shadow: none !important;
-    }
-    label {
-        font-weight: 600 !important;
-        margin-bottom: 8px;
-    }
-</style>

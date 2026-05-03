@@ -3,7 +3,12 @@
 @section('title', 'Kelola Menu')
 
 @section('content')
-    {{-- Alert Success dengan sentuhan Emerald --}}
+    {{-- Alert Success --}}
+    <div id="ajax-alert" style="display: none;" class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color: white;">&times;</button>
+        <i class="icon fa fa-check"></i> <span id="ajax-message"></span>
+    </div>
+
     @if (session('success'))
         <div class="alert alert-success alert-dismissible" style="background-color: #064e3b !important; border-color: #4ade80;">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color: white;">&times;</button>
@@ -63,26 +68,37 @@
                                 </span>
                             </td>
                             <td class="text-center" style="vertical-align: middle;">
-                                @if($menu->status === 'tersedia')
-                                    <span class="label" style="background-color: #16a34a; padding: 5px 10px; font-weight: 500;">Tersedia</span>
-                                @else
-                                    <span class="label" style="background-color: #dc2626; padding: 5px 10px; font-weight: 500;">Habis</span>
-                                @endif
+                                {{-- Label Status Dinamis --}}
+                                <span id="label-status-{{ $menu->id }}" class="label" 
+                                      style="background-color: {{ $menu->status ? '#16a34a' : '#dc2626' }}; padding: 5px 10px; font-weight: 500;">
+                                    {{ $menu->status ? 'Tersedia' : 'Habis' }}
+                                </span>
                             </td>
                             <td class="text-center" style="vertical-align: middle;">
                                 <div class="btn-group">
-                                    <form action="{{ route('admin.menus.toggle', $menu) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" class="btn btn-default btn-sm" title="Ubah Status" style="border-radius: 4px 0 0 4px;">
-                                            <i class="fa fa-refresh text-warning"></i>
-                                        </button>
-                                    </form>
-                                    
+                                    {{-- Toggle Ketersediaan --}}
+                                    <button type="button" 
+                                            class="btn btn-default btn-sm btn-toggle-status" 
+                                            data-id="{{ $menu->id }}"
+                                            data-url="{{ route('admin.menus.toggle-status', $menu) }}"
+                                            title="Ubah Ketersediaan">
+                                        <i class="fa fa-power-off {{ $menu->status ? 'text-success' : 'text-danger' }}"></i>
+                                    </button>
+
+                                    {{-- Toggle Special --}}
+                                    <button type="button" 
+                                            class="btn btn-default btn-sm btn-toggle-special" 
+                                            data-url="{{ route('admin.menus.toggle-special', $menu) }}"
+                                            title="Ubah Status Spesial">
+                                        <i class="fa fa-star {{ $menu->is_special ? 'text-yellow' : 'text-muted' }}"></i>
+                                    </button>
+
+                                    {{-- Edit --}}
                                     <a href="{{ route('admin.menus.edit', $menu) }}" class="btn btn-default btn-sm" title="Edit Data">
                                         <i class="fa fa-pencil text-info"></i>
                                     </a>
 
+                                    {{-- Delete --}}
                                     <form action="{{ route('admin.menus.destroy', $menu) }}" method="POST" style="display:inline;" onsubmit="return confirm('Ingin menghapus menu ini dari daftar?')">
                                         @csrf
                                         @method('DELETE')
@@ -115,16 +131,100 @@
     </div>
 
     <style>
-        /* CSS Tambahan agar pagination mengikuti warna tema */
-        .pagination > .active > a, 
-        .pagination > .active > span, 
-        .pagination > .active > a:hover, 
-        .pagination > .active > span:hover {
+        .pagination > .active > a, .pagination > .active > span {
             background-color: #064e3b !important;
             border-color: #064e3b !important;
         }
         .table-hover tbody tr:hover {
-            background-color: #f0fdf4 !important; /* Hijau sangat muda saat hover */
+            background-color: #f0fdf4 !important;
+        }
+        .text-yellow { color: #f39c12 !important; }
+        #ajax-alert {
+            background-color: #064e3b !important;
+            border-color: #4ade80;
+            color: white;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
     </style>
+
+    {{-- Script AJAX --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // CSRF Setup
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
+        function showToast(message) {
+            $('#ajax-message').text(message);
+            $('#ajax-alert').fadeIn().delay(2000).fadeOut();
+        }
+
+        // Toggle Status Ketersediaan
+        $('.btn-toggle-status').on('click', function() {
+            let btn = $(this);
+            let icon = btn.find('i');
+            let url = btn.data('url');
+            let menuId = btn.data('id');
+            let label = $('#label-status-' + menuId);
+
+            btn.prop('disabled', true);
+
+            $.ajax({
+                url: url,
+                type: 'PATCH',
+                success: function(response) {
+                    icon.toggleClass('text-success text-danger');
+                    if (response.new_status) {
+                        label.text('Tersedia').css('background-color', '#16a34a');
+                    } else {
+                        label.text('Habis').css('background-color', '#dc2626');
+                    }
+                    showToast('Status ketersediaan diperbarui');
+                },
+                error: function() {
+                    alert('Terjadi kesalahan sistem.');
+                },
+                complete: function() {
+                    btn.prop('disabled', false);
+                }
+            });
+        });
+
+        // Toggle Menu Spesial
+        $('.btn-toggle-special').on('click', function() {
+            let btn = $(this);
+            let icon = btn.find('i');
+            let url = btn.data('url');
+
+            btn.prop('disabled', true);
+
+            $.ajax({
+                url: url,
+                type: 'PATCH',
+                success: function(response) {
+                    if (response.is_special) {
+                        $('.btn-toggle-special i').removeClass('text-yellow').addClass('text-muted');
+                        icon.addClass('text-yellow').removeClass('text-muted');
+                    } else {
+                        icon.removeClass('text-yellow').addClass('text-muted');
+                    }
+                    showToast('Menu spesial diperbarui');
+                },
+                error: function() {
+                    alert('Terjadi kesalahan sistem.');
+                },
+                complete: function() {
+                    btn.prop('disabled', false);
+                }
+            });
+        });
+    });
+    </script>
 @endsection

@@ -70,6 +70,7 @@
             background: rgba(255,255,255,0.05) !important; 
         }
     </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">

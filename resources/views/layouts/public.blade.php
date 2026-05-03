@@ -70,7 +70,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="{{ request()->routeIs('home') ? 'active' : '' }}"><a href="{{ route('home') }}">Beranda</a></li>
                 <li class="{{ request()->routeIs('menu.*') ? 'active' : '' }}"><a href="{{ route('menu.index') }}">Menu</a></li>
-                <li><a href="{{ route('login') }}">Admin</a></li>
+                @auth
+                    <li><a href="{{ route('admin.dashboard') }}">Admin</a></li>
+                @else
+                    <li><a href="{{ route('login') }}">Admin</a></li>
+                @endauth
             </ul>
         </div>
     </nav>

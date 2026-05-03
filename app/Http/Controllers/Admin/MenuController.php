@@ -15,7 +15,6 @@ class MenuController extends Controller
     public function index(): View
     {
         $menus = Menu::latest()->paginate(10);
-
         return view('admin.menus.index', compact('menus'));
     }
 
@@ -62,24 +61,42 @@ class MenuController extends Controller
         return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil dihapus.');
     }
 
-    public function toggle(Menu $menu): RedirectResponse
+    public function toggleStatus(Menu $menu)
     {
-        $menu->update([
-            'status' => $menu->status === 'tersedia' ? 'tidak_tersedia' : 'tersedia',
-        ]);
+        $menu->update(['status' => !$menu->status]);
 
-        return back()->with('success', 'Status ketersediaan menu berhasil diubah.');
+        return response()->json([
+            'success' => true,
+            'new_status' => $menu->status
+        ]);
+    }
+
+    public function toggleSpecial(Menu $menu)
+    {
+        if (!$menu->is_special) {
+            Menu::query()->update(['is_special' => 0]);
+            
+            $menu->update(['is_special' => 1]);
+        } else {
+            $menu->update(['is_special' => 0]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'is_special' => $menu->is_special
+        ]);
     }
 
     private function validatedData(Request $request): array
     {
         return $request->validate([
             'nama_menu' => ['required', 'string', 'max:255'],
-            'kategori' => ['required', 'string', 'max:100'],
-            'harga' => ['required', 'numeric', 'min:0'],
+            'kategori'  => ['required', 'string', 'max:100'],
+            'harga'     => ['required', 'numeric', 'min:0'],
             'deskripsi' => ['nullable', 'string'],
-            'status' => ['required', 'in:tersedia,tidak_tersedia'],
-            'gambar' => ['nullable', 'image', 'max:2048'],
+            'status'    => ['required', 'boolean'], // Diubah ke boolean
+            'is_special'=> ['required', 'boolean'], // Tambahkan kolom baru
+            'gambar'    => ['nullable', 'image', 'max:2048'],
         ]);
     }
 
