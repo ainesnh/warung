@@ -24,7 +24,7 @@
 
             <div class="row justify-content-center">
                 @forelse ($specialMenus as $menu)
-                    <div class="col-12 col-lg-10 mb-5"> {{-- Lebar card tetap diatur di sini --}}
+                    <div class="col-12 col-lg-10 mb-5">
                         @include('menu.partials.card_special', ['menu' => $menu])
                     </div>
                 @empty

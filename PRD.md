@@ -200,14 +200,14 @@
     | ------------------------------------ | ----------- | ----------------------------------- |
     | `/`                                  | Pengunjung  | Halaman home                        |
     | `/menu`                              | Pengunjung  | Halaman daftar menu                 |
-    | `/login`                             | Guest/Admin | Halaman login admin                 |
-    | `/logout`                            | Admin       | Proses logout admin                 |
-    | `/admin/dashboard`                   | Admin       | Dashboard admin                     |
-    | `/admin/menus`                       | Admin       | Halaman kelola menu                 |
-    | `/admin/menus/create`                | Admin       | Form tambah menu                    |
-    | `/admin/menus/{menu}/edit`           | Admin       | Form edit menu                      |
-    | `/admin/menus/{menu}/toggle-status`  | Admin       | Mengubah status menu tersedia/tidak |
-    | `/admin/menus/{menu}/toggle-special` | Admin       | Mengubah status menu spesial        |
+    | `/login`                             | User/Admin  | Halaman login admin                 |
+    | `/logout`                            | User/Admin  | Proses logout admin                 |
+    | `/admin/dashboard`                   | User/Admin  | Dashboard admin                     |
+    | `/admin/menus`                       | User/Admin  | Halaman kelola menu                 |
+    | `/admin/menus/create`                | User/Admin  | Form tambah menu                    |
+    | `/admin/menus/{menu}/edit`           | User/Admin  | Form edit menu                      |
+    | `/admin/menus/{menu}/toggle-status`  | User/Admin  | Mengubah status menu tersedia/tidak |
+    | `/admin/menus/{menu}/toggle-special` | User/Admin  | Mengubah status menu spesial        |
     | `/admin/menus/{menu}/deactivate`     | Admin       | Menonaktifkan menu                  |
     | `/admin/users`                       | Admin       | Halaman kelola user                 |
     | `/admin/users/create`                | Admin       | Form tambah user                    |

@@ -43,6 +43,22 @@
             </div>
         </div>
 
+        <div class="box-body" style="background-color: #f9fafb; border-bottom: 1px solid #eee; padding: 15px 20px;">
+            <form action="{{ route('admin.menus.index') }}" method="GET" class="form-inline">
+                <div class="form-group mr-3">
+                    <label for="status" class="control-label" style="margin-right: 10px; color: #4b5563; font-weight: 600;"> Status </label>
+                    <select name="status" id="status" class="form-control select2" onchange="this.form.submit()" style="min-width: 200px; border-radius: 4px;">
+                        <option value="all_active" {{ request('status') == 'all_active' ? 'selected' : '' }}>
+                            Menu Aktif & Nonaktif
+                        </option>
+                        <option value="archived" {{ request('status') == 'archived' ? 'selected' : '' }}>
+                            Menu Terarsip
+                        </option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover table-striped" style="vertical-align: middle;">
                 <thead>
@@ -89,35 +105,50 @@
                                         data-url="{{ route('admin.menus.toggle-status', $menu) }}"
                                         style="border: none; background: transparent; padding: 0;">
                                     <span id="label-status-{{ $menu->id }}" class="label" 
-                                          style="background-color: {{ $menu->status ? '#16a34a' : '#dc2626' }}; padding: 8px 12px; font-weight: 500; cursor: pointer; border-radius: 4px; display: inline-block;">
-                                        {{ $menu->status ? 'Tersedia' : 'Habis' }}
+                                          style="background-color: {{ $menu->status == 1 ? '#16a34a' : '#dc2626' }}; padding: 8px 12px; font-weight: 500; cursor: pointer; border-radius: 4px; display: inline-block;">
+                                        {{ $menu->status == 1 ? 'Tersedia' : 'Habis' }}
                                     </span>
                                 </button>
                             </td>
                             <td class="text-center" style="vertical-align: middle;">
-                                <div class="btn-group">
-                                    {{-- Toggle Special --}}
-                                    <button type="button" 
-                                            class="btn btn-default btn-sm btn-toggle-special" 
-                                            data-url="{{ route('admin.menus.toggle-special', $menu) }}"
-                                            title="Ubah Status Spesial">
-                                        <i class="fa fa-star {{ $menu->is_special ? 'text-yellow' : 'text-muted' }}"></i>
-                                    </button>
+                                <div class="btn-group">                                 
+                                    @if($status == 'archived')
+                                        <form action="{{ route('admin.menus.toggle-status', $menu) }}" 
+                                            method="POST" 
+                                            style="display:inline;">
+                                            @csrf
+                                            @method('PATCH')
 
-                                    @if(auth()->user()->isAdmin())
+                                            <button type="submit" class="btn btn-default btn-sm" title="Pulihkan Menu"> Pulihkan </button>
+                                        </form>
+                                    @else
+                                        {{-- Toggle Special --}}
+                                        <button type="button" 
+                                                class="btn btn-default btn-sm btn-toggle-special" 
+                                                data-url="{{ route('admin.menus.toggle-special', $menu) }}"
+                                                title="Ubah Status Spesial">
+                                            <i class="fa fa-star {{ $menu->is_special ? 'text-yellow' : 'text-muted' }}"></i>
+                                        </button>
+
                                         {{-- Edit --}}
                                         <a href="{{ route('admin.menus.edit', $menu) }}" class="btn btn-default btn-sm" title="Edit Data">
                                             <i class="fa fa-pencil text-info"></i>
                                         </a>
+                                        
+                                        @if(auth()->user()->isAdmin())
+                                            {{-- Delete --}}
+                                            <form action="{{ route('admin.menus.deactivate', $menu) }}" 
+                                                method="POST" 
+                                                class="form-delete-menu" 
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('PATCH')
 
-                                        {{-- Delete (Sembunyikan) --}}
-                                        <form action="{{ route('admin.menus.deactivate', $menu) }}" method="POST" class="form-delete-menu" style="display:inline;">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="button" class="btn btn-default btn-sm btn-delete-trigger" title="Nonaktifkan (Sembunyikan)">
-                                                <i class="fa fa-trash text-danger"></i>
-                                            </button>
-                                        </form>
+                                                <button type="submit" class="btn btn-default btn-sm btn-delete-trigger" title="Nonaktifkan (Sembunyikan)">
+                                                    <i class="fa fa-trash text-danger"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     @endif
                                 </div>
                             </td>
@@ -236,6 +267,30 @@
                 complete: function() {
                     btn.prop('disabled', false);
                 }
+            });
+        });
+
+        $('.form-delete-menu').on('submit', function(e) {
+            e.preventDefault();
+
+            let form = this;
+
+            Swal.fire({
+                title: 'Hapus Menu?',
+                text: "Menu akan disembunyikan dari pengunjung.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+
             });
         });
     });

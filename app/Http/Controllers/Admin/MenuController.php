@@ -12,10 +12,21 @@ use Illuminate\View\View;
 
 class MenuController extends Controller
 {
-    public function index(): View
+    public function index(Request $request)
     {
-        $menus = Menu::latest()->paginate(10);
-        return view('admin.menus.index', compact('menus'));
+        $status = $request->get('status', 'all_active');
+
+        $query = Menu::query();
+
+        if ($status == 'all_active') {
+            $query->whereIn('status', [0, 1]);
+        } elseif ($status == 'archived') {
+            $query->where('status', -1);
+        }
+
+        $menus = $query->latest()->paginate(10);
+
+        return view('admin.menus.index', compact('menus', 'status'));
     }
 
     public function create(): View
@@ -69,7 +80,18 @@ class MenuController extends Controller
 
     public function toggleStatus(Menu $menu)
     {
-        $menu->update(['status' => !$menu->status]);
+        if ($menu->status == -1) {
+            $menu->update([
+                'status' => 1
+            ]);
+
+            return redirect()->back()->with('success', 'Menu berhasil dipulihkan.');
+        }
+
+        $newStatus = $menu->status == 1 ? 0 : 1;
+        $menu->update([
+            'status' => $newStatus
+        ]);
 
         return response()->json([
             'success' => true,

@@ -99,7 +99,6 @@
                             <td class="text-center" style="vertical-align: middle;">
                                 <div class="btn-group">
                                     @if($status == 'archived')
-                                        {{-- Tombol Restore jika sedang melihat arsip --}}
                                         <form action="{{ route('admin.users.restore', $user) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('PATCH')
@@ -225,9 +224,9 @@
                 text: "User ini tidak akan muncul di daftar aktif, tapi datanya tetap ada di sistem.",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#064e3b',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya!',
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya',
                 cancelButtonText: 'Batal',
                 reverseButtons: true
             }).then((result) => {
