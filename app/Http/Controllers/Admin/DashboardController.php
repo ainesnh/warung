@@ -12,8 +12,8 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard', [
             'totalMenu' => Menu::count(),
-            'menuTersedia' => Menu::where('status', 'tersedia')->count(),
-            'menuTidakTersedia' => Menu::where('status', 'tidak_tersedia')->count(),
+            'menuTersedia' => Menu::where('status', 1)->count(),
+            'menuTidakTersedia' => Menu::where('status', 0)->count(),
             'menuTerbaru' => Menu::latest()->limit(5)->get(),
         ]);
     }

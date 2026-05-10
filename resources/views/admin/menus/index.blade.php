@@ -3,14 +3,28 @@
 @section('title', 'Kelola Menu')
 
 @section('content')
-    {{-- Alert Success --}}
-    <div id="ajax-alert" style="display: none;" class="alert alert-success alert-dismissible">
+    <style>
+        .alert-floating {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 250px;
+            max-width: 350px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-left: 5px solid #4ade80 !important;
+        }
+    </style>
+
+    {{-- Alert AJAX --}}
+    <div id="ajax-alert" style="display: none;" class="alert alert-success alert-dismissible alert-floating" style="background-color: #064e3b !important; color: white;">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color: white;">&times;</button>
         <i class="icon fa fa-check"></i> <span id="ajax-message"></span>
     </div>
 
+    {{-- Alert Session --}}
     @if (session('success'))
-        <div class="alert alert-success alert-dismissible" style="background-color: #064e3b !important; border-color: #4ade80;">
+        <div class="alert alert-success alert-dismissible alert-floating" style="background-color: #064e3b !important; color: white;">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="color: white;">&times;</button>
             <i class="icon fa fa-check"></i> {{ session('success') }}
         </div>
@@ -21,11 +35,14 @@
             <h3 class="box-title" style="font-weight: 700; color: #064e3b;">
                 <i class="fa fa-book" style="margin-right: 5px;"></i> Daftar Menu Kuliner
             </h3>
-            <div class="box-tools">
-                <a href="{{ route('admin.menus.create') }}" class="btn btn-flat" style="background-color: #16a34a; color: white; border-radius: 4px;">
-                    <i class="fa fa-plus-circle"></i> Tambah Menu Baru
-                </a>
-            </div>
+
+            @if(auth()->user()->isAdmin())
+                <div class="box-tools">
+                    <a href="{{ route('admin.menus.create') }}" class="btn btn-flat" style="background-color: #16a34a; color: white; border-radius: 4px;">
+                        <i class="fa fa-plus-circle"></i> Tambah Menu Baru
+                    </a>
+                </div>
+            @endif
         </div>
 
         <div class="box-body table-responsive no-padding">
@@ -156,6 +173,10 @@
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
         });
+
+        if ($('.alert-floating').is(':visible')) {
+            $('.alert-floating').delay(2000).fadeOut();
+        }
 
         function showToast(message) {
             $('#ajax-message').text(message);

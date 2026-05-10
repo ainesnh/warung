@@ -102,9 +102,9 @@
                     <p class="text-muted mb-0 small">Siap melayani pesanan untuk acara keluarga dan kantor.</p>
                 </div>
                 <div class="col-xs-12 col-sm-4 text-right">
-                    <a href="https://wa.me/628123456789" class="btn-wa-small shadow-sm">
+                    <!-- <a href="https://wa.me/628123456789" class="btn-wa-small shadow-sm">
                         <i class="fab fa-whatsapp"></i> Chat WhatsApp
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>

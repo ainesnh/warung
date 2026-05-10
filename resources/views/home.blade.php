@@ -22,21 +22,13 @@
                 <p class="text-muted">Pilihan menu terfavorit yang disiapkan khusus oleh chef kami pagi ini.</p>
             </div>
 
-            <div class="row">
+            <div class="row justify-content-center">
                 @forelse ($specialMenus as $menu)
-                    <div class="col-sm-6 col-md-4 mb-4">
-                        <div class="card h-100 border-0 shadow-sm hover-shadow" style="transition: 0.4s; border-radius: 20px; overflow: hidden; background: #fff;">
-                            @include('menu.partials.card', ['menu' => $menu])
-                        </div>
+                    <div class="col-12 col-lg-10 mb-5"> {{-- Lebar card tetap diatur di sini --}}
+                        @include('menu.partials.card_special', ['menu' => $menu])
                     </div>
                 @empty
-                    <div class="col-md-12 text-center">
-                        <div class="p-5" style="border: 2px dashed #c3e6cb; border-radius: 20px;">
-                            <i class="fas fa-concierge-bell fa-3x text-muted mb-3" style="opacity: 0.3;"></i>
-                            <p class="text-muted italic">Menu spesial hari ini sedang disiapkan.</p>
-                        </div>
-                    </div>
-                @endforelse
+                    @endforelse
             </div>
         </div>
     </section>

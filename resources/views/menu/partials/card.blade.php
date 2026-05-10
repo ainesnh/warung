@@ -1,46 +1,37 @@
-<!-- 1. AREA GAMBAR (INFO GAMBAR SAJA) -->
-<div class="position-relative" style="height: 220px; overflow: hidden; background-color: #f8fafc; border-radius: 20px 20px 0 0;">
+<div class="card-image-wrapper" style="position: relative; width: 100%; height: 200px; overflow: hidden; background-color: #f1f5f9;">
     @if ($menu->gambar)
-        <img src="{{ asset($menu->gambar) }}" class="card-img-top w-100 h-100" style="object-fit: cover;" alt="{{ $menu->nama_menu }}">
+        <img src="{{ asset($menu->gambar) }}" 
+             alt="{{ $menu->nama_menu }}"
+             style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
     @else
-        <div class="d-flex flex-column align-items-center justify-content-center h-100 text-muted" style="background: #f1f5f9;">
-            <i class="fas fa-image fa-3x mb-2" style="opacity: 0.1;"></i>
-            <span style="font-size: 0.8rem; font-weight: 700; opacity: 0.3; letter-spacing: 2px;">GAMBAR TIDAK TERSEDIA</span>
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 text-muted">
+            <i class="fas fa-image fa-2x opacity-25"></i>
         </div>
     @endif
-    
-    <!-- Badge Tersedia (Hanya status ketersediaan, tanpa embel-embel lain) -->
-    <div class="position-absolute" style="top: 20px; left: 20px;">
+
+    {{-- Badge Status --}}
+    <div style="position: absolute; top: 10px; left: 10px;">
         @if($menu->status == 1)
-            <span class="badge" style="background-color: #16a34a;">Tersedia</span>
+            <span class="badge" style="background-color: #16a34a; font-size: 0.7rem; padding: 5px 10px; border-radius: 6px; color: white;">Tersedia</span>
         @else
-            <span class="badge" style="background-color: #dc2626;">Habis</span>
+            <span class="badge" style="background-color: #dc2626; font-size: 0.7rem; padding: 5px 10px; border-radius: 6px; color: white;">Habis</span>
         @endif
     </div>
 </div>
 
-<!-- 2. AREA KONTEN (URUTAN: NAMA -> HARGA -> DESKRIPSI) -->
-<div class="card-body" style="padding: 8px 8px;"> {{-- Padding ekstra luas agar tidak meper --}}
-    
-    <!-- Nama Menu (Ukuran Besar) -->
-    <h3 class="fw-bold text-dark" style="font-size: 1.8rem; line-height: 1.2; margin-bottom: 15px; letter-spacing: -1px;">
+<div class="card-body" style="padding: 20px 15px;"> 
+    <h5 class="fw-bold text-dark" style="font-size: 1.1rem; line-height: 1.4; height: 2.8em; margin-bottom: 12px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
         {{ $menu->nama_menu }}
-    </h3>
-
-    <!-- Harga (Tepat di bawah Nama) -->
-    <div class="fw-bold" style="font-size: 1.5rem; color: #16a34a; margin-bottom: 25px;">
-        <span style="font-size: 1.1rem; font-weight: 600;">Rp</span>{{ number_format($menu->harga, 0, ',', '.') }}
+    </h5>
+    <div class="fw-bold" style="font-size: 1.2rem; color: #16a34a; margin-bottom: 12px;">
+        <span style="font-size: 0.9rem; font-weight: 600;">Rp</span>{{ number_format($menu->harga, 0, ',', '.') }}
     </div>
-
-    <!-- Deskripsi (Di paling bawah) -->
-    <p class="text-muted" style="font-size: 1.2rem; line-height: 1.7; margin-bottom: 0; font-weight: 400;">
+    <p class="text-muted" style="font-size: 0.85rem; line-height: 1.5; margin-bottom: 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
         {{ $menu->deskripsi ?: '-' }}
     </p>
-
 </div>
 
 <style>
-    /* Styling Card agar terlihat kokoh dan elegan */
     .card {
         border: 1px solid #eef2f6 !important;
         border-radius: 20px !important;
