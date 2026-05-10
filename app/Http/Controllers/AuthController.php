@@ -21,10 +21,20 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
+        $credentials['is_active'] = true;
+
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
             return redirect()->intended(route('admin.dashboard'));
+        }
+
+        $user = \App\Models\User::where('email', $request->email)->first();
+
+        if ($user && !$user->is_active) {
+            return back()
+                ->withErrors(['email' => 'Akun Anda sudah tidak aktif. Silakan hubungi Admin.'])
+                ->onlyInput('email');
         }
 
         return back()

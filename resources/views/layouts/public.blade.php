@@ -71,9 +71,17 @@
                 <li class="{{ request()->routeIs('home') ? 'active' : '' }}"><a href="{{ route('home') }}">Beranda</a></li>
                 <li class="{{ request()->routeIs('menu.*') ? 'active' : '' }}"><a href="{{ route('menu.index') }}">Menu</a></li>
                 @auth
-                    <li><a href="{{ route('admin.dashboard') }}">Admin</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                    <li>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
                 @else
-                    <li><a href="{{ route('login') }}">Admin</a></li>
+                    <li class="{{ request()->routeIs('login') ? 'active' : '' }}"><a href="{{ route('login') }}">Login</a></li>
                 @endauth
             </ul>
         </div>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     @include('layouts.adminlte.partials.head')
     <style>
         /* --- TEMA CUSTOM OMAH TENGKLENG --- */

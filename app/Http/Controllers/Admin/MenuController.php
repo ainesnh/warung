@@ -53,6 +53,12 @@ class MenuController extends Controller
         return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil diperbarui.');
     }
 
+    public function deactivate(Menu $menu)
+    {
+        $menu->update(['status' => -1]);
+        return redirect()->back()->with('success', 'Menu berhasil dinonaktifkan.');
+    }
+
     public function destroy(Menu $menu): RedirectResponse
     {
         $this->deleteImage($menu);

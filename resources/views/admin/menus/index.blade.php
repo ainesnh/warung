@@ -36,8 +36,8 @@
                         <th style="padding: 12px;">Detail Menu</th>
                         <th style="padding: 12px;">Kategori</th>
                         <th style="padding: 12px;">Harga</th>
-                        <th class="text-center" style="padding: 12px;">Status Persediaan</th>
-                        <th class="text-center" style="width: 200px; padding: 12px;">Aksi Manajemen</th>
+                        <th class="text-center" style="padding: 12px;">Status</th>
+                        <th class="text-center" style="width: 150px; padding: 12px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,23 +68,19 @@
                                 </span>
                             </td>
                             <td class="text-center" style="vertical-align: middle;">
-                                {{-- Label Status Dinamis --}}
-                                <span id="label-status-{{ $menu->id }}" class="label" 
-                                      style="background-color: {{ $menu->status ? '#16a34a' : '#dc2626' }}; padding: 5px 10px; font-weight: 500;">
-                                    {{ $menu->status ? 'Tersedia' : 'Habis' }}
-                                </span>
+                                <button type="button" 
+                                        class="btn btn-toggle-status" 
+                                        data-id="{{ $menu->id }}"
+                                        data-url="{{ route('admin.menus.toggle-status', $menu) }}"
+                                        style="border: none; background: transparent; padding: 0;">
+                                    <span id="label-status-{{ $menu->id }}" class="label" 
+                                          style="background-color: {{ $menu->status ? '#16a34a' : '#dc2626' }}; padding: 8px 12px; font-weight: 500; cursor: pointer; border-radius: 4px; display: inline-block;">
+                                        {{ $menu->status ? 'Tersedia' : 'Habis' }}
+                                    </span>
+                                </button>
                             </td>
                             <td class="text-center" style="vertical-align: middle;">
                                 <div class="btn-group">
-                                    {{-- Toggle Ketersediaan --}}
-                                    <button type="button" 
-                                            class="btn btn-default btn-sm btn-toggle-status" 
-                                            data-id="{{ $menu->id }}"
-                                            data-url="{{ route('admin.menus.toggle-status', $menu) }}"
-                                            title="Ubah Ketersediaan">
-                                        <i class="fa fa-power-off {{ $menu->status ? 'text-success' : 'text-danger' }}"></i>
-                                    </button>
-
                                     {{-- Toggle Special --}}
                                     <button type="button" 
                                             class="btn btn-default btn-sm btn-toggle-special" 
@@ -93,19 +89,21 @@
                                         <i class="fa fa-star {{ $menu->is_special ? 'text-yellow' : 'text-muted' }}"></i>
                                     </button>
 
-                                    {{-- Edit --}}
-                                    <a href="{{ route('admin.menus.edit', $menu) }}" class="btn btn-default btn-sm" title="Edit Data">
-                                        <i class="fa fa-pencil text-info"></i>
-                                    </a>
+                                    @if(auth()->user()->isAdmin())
+                                        {{-- Edit --}}
+                                        <a href="{{ route('admin.menus.edit', $menu) }}" class="btn btn-default btn-sm" title="Edit Data">
+                                            <i class="fa fa-pencil text-info"></i>
+                                        </a>
 
-                                    {{-- Delete --}}
-                                    <form action="{{ route('admin.menus.destroy', $menu) }}" method="POST" style="display:inline;" onsubmit="return confirm('Ingin menghapus menu ini dari daftar?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-default btn-sm" title="Hapus Menu" style="border-radius: 0 4px 4px 0;">
-                                            <i class="fa fa-trash text-danger"></i>
-                                        </button>
-                                    </form>
+                                        {{-- Delete (Sembunyikan) --}}
+                                        <form action="{{ route('admin.menus.deactivate', $menu) }}" method="POST" class="form-delete-menu" style="display:inline;">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="button" class="btn btn-default btn-sm btn-delete-trigger" title="Nonaktifkan (Sembunyikan)">
+                                                <i class="fa fa-trash text-danger"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -152,11 +150,9 @@
         }
     </style>
 
-    {{-- Script AJAX --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
-        // CSRF Setup
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
         });
@@ -166,10 +162,9 @@
             $('#ajax-alert').fadeIn().delay(2000).fadeOut();
         }
 
-        // Toggle Status Ketersediaan
+        // Toggle Status
         $('.btn-toggle-status').on('click', function() {
             let btn = $(this);
-            let icon = btn.find('i');
             let url = btn.data('url');
             let menuId = btn.data('id');
             let label = $('#label-status-' + menuId);
@@ -180,7 +175,6 @@
                 url: url,
                 type: 'PATCH',
                 success: function(response) {
-                    icon.toggleClass('text-success text-danger');
                     if (response.new_status) {
                         label.text('Tersedia').css('background-color', '#16a34a');
                     } else {
@@ -197,7 +191,7 @@
             });
         });
 
-        // Toggle Menu Spesial
+        // Toggle Spesial
         $('.btn-toggle-special').on('click', function() {
             let btn = $(this);
             let icon = btn.find('i');

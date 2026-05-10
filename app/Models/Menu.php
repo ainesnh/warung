@@ -30,4 +30,15 @@ class Menu extends Model
     {
         return $query->where('status', 1);
     }
+
+    protected static function booted()
+    {
+        static::creating(function ($menu) {
+            $menu->created_by = auth()->user()->name ?? 'System';
+        });
+
+        static::updating(function ($menu) {
+            $menu->updated_by = auth()->user()->name ?? 'System';
+        });
+    }
 }

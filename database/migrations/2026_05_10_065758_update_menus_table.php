@@ -9,15 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->boolean('status')->default(1)->change();
-            $table->boolean('is_special')->default(0)->after('status');
+            $table->string('created_by')->nullable()->after('status');
+            $table->string('updated_by')->nullable()->after('created_by');
         });
     }
 
     public function down(): void
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('is_special');
+            $table->dropColumn(['created_by', 'updated_by']);
         });
     }
 };
