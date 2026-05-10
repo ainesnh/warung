@@ -36,13 +36,11 @@
                 <i class="fa fa-book" style="margin-right: 5px;"></i> Daftar Menu Kuliner
             </h3>
 
-            @if(auth()->user()->isAdmin())
-                <div class="box-tools">
-                    <a href="{{ route('admin.menus.create') }}" class="btn btn-flat" style="background-color: #16a34a; color: white; border-radius: 4px;">
-                        <i class="fa fa-plus-circle"></i> Tambah Menu Baru
-                    </a>
-                </div>
-            @endif
+            <div class="box-tools">
+                <a href="{{ route('admin.menus.create') }}" class="btn btn-flat" style="background-color: #16a34a; color: white; border-radius: 4px;">
+                    <i class="fa fa-plus-circle"></i> Tambah Menu Baru
+                </a>
+            </div>
         </div>
 
         <div class="box-body table-responsive no-padding">
