@@ -18,20 +18,27 @@
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
+
             <li class="header" style="color: rgba(255,255,255,0.3);">MASTER</li>
-            <li class="{{ request()->routeIs('admin.menus.*') ? 'active' : '' }}">
-                <a href="{{ route('admin.menus.index') }}">
-                    <i class="fa fa-cutlery"></i> <span>Menu</span>
+        
+            @if(auth()->user()->isAdmin())
+            <li class="{{ request()->routeIs('admin.roles.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.roles.index') }}">
+                    <i class="fa fa-id-badge"></i></i> <span>User Role</span>
                 </a>
             </li>
-            
-            @if(auth()->user()->isAdmin())
             <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <a href="{{ route('admin.users.index') }}">
                     <i class="fa fa-users"></i></i> <span>User</span>
                 </a>
             </li>
             @endif
+
+            <li class="{{ request()->routeIs('admin.menus.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.menus.index') }}">
+                    <i class="fa fa-cutlery"></i> <span>Menu</span>
+                </a>
+            </li>
 
             <li class="header" style="color: rgba(255,255,255,0.3);">EKSTERNAL</li>
             <li>

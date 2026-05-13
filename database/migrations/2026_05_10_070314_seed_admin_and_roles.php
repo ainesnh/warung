@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -16,7 +16,13 @@ return new class extends Migration
             ]);
         }
         
-        if (! DB::table('users')->where('email', 'admin@warung.test')->exists()) {
+        if (DB::table('users')->where('email', 'admin@warung.test')->exists()) {
+            DB::table('users')->where('email', 'admin@warung.test')->update([
+                'role_id' => 1,
+                'is_active' => 1,
+                'updated_at' => now(),
+            ]);
+        } else {
             DB::table('users')->insert([
                 'name' => 'Admin',
                 'email' => 'admin@warung.test',

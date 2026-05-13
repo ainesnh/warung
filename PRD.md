@@ -1,251 +1,308 @@
 # Product Requirements Document (PRD)
 
 ## A. Nama Produk
-    **Sistem Informasi Menu Omah Tengkleng Klangenan**
+
+**Sistem Informasi Menu Omah Tengkleng Klangenan**
 
 ## B. Deskripsi Produk
-    Website yang dirancang merupakan sistem informasi berbasis web yang digunakan untuk membantu pengelolaan menu dan informasi pada Omah Tengkleng Klangenan. Sistem ini dirancang menggunakan framework **Laravel** dan database **MySQL**.
 
-    Sistem ini memungkinkan admin untuk mengelola data menu, seperti menambah, mengubah, dan menghapus menu. Selain itu, website juga dapat diakses oleh pelanggan untuk melihat daftar menu yang tersedia beserta informasi harga dan deskripsi menu.
+Sistem Informasi Menu Omah Tengkleng Klangenan adalah website berbasis **Laravel** dan **MySQL** yang digunakan untuk mengelola dan menampilkan informasi menu warung makan.
 
-    Dengan adanya sistem ini, pengelolaan usaha diharapkan menjadi lebih terstruktur, efisien, dan informasi menu dapat diakses dengan mudah oleh pelanggan.
+Website memiliki dua area utama:
+
+- **Halaman pengunjung**, yaitu halaman publik dengan tampilan bernuansa hijau seperti website warung/restoran. Pengunjung dapat melihat halaman beranda dan daftar menu yang tersedia.
+- **Halaman admin**, yaitu halaman pengelolaan berbasis AdminLTE yang hanya dapat diakses setelah login.
+
+Sistem ini membantu admin dalam mengelola data menu, mengatur ketersediaan menu, menentukan menu spesial, mengarsipkan menu, serta mengelola data user.
 
 ## C. Tujuan Perancangan
-    Tujuan dari perancangan website ini adalah sebagai berikut:
-    - Mempermudah pengelolaan data menu pada usaha warung makan.
-    - Meningkatkan efisiensi dalam pengaturan ketersediaan menu.
-    - Menyediakan informasi menu kepada pelanggan.
-    - Mendukung proses digitalisasi usaha kuliner skala kecil.
 
-## D. Pengguna Sistem   
-    Pengguna dalam sistem ini terdiri dari:
+Tujuan dari perancangan sistem ini adalah:
+
+- Mempermudah pengelolaan data menu pada usaha warung makan.
+- Menampilkan informasi menu kepada pengunjung secara rapi dan mudah diakses.
+- Mengatur status ketersediaan menu secara cepat.
+- Menentukan menu rekomendasi atau menu spesial pada halaman awal.
+- Mengamankan halaman pengelolaan menggunakan login.
+- Mendukung digitalisasi usaha kuliner skala kecil.
+
+## D. Pengguna Sistem
 
 ### 1. Admin
-    Admin bertugas mengelola data menu, mengatur ketersediaan menu, dan mengatur data user.
+
+Admin memiliki akses untuk mengelola menu, mengatur status menu, menentukan menu spesial, mengelola user, serta mengakses dashboard.
 
 ### 2. User/Karyawan
-    User/Karyawan bertugas mengelola data ketersediaan menu.
+
+User atau karyawan dapat masuk ke sistem untuk membantu pengelolaan data sesuai kebutuhan operasional.
 
 ### 3. Pengunjung
-    Pengunjung dapat melihat informasi menu, harga, dan detail menu yang tersedia pada website.
+
+Pengunjung dapat membuka website tanpa login untuk melihat informasi warung dan daftar menu yang tersedia.
 
 ## E. Rancangan Fitur
 
-### 1. Dashboard Admin
-    Dashboard Admin menampilkan halaman utama bagi admin yang berfungsi untuk menampilkan ringkasan informasi sistem, seperti jumlah menu, jumlah menu tersedia, dan jumlah menu tidak tersedia.
+### 1. Halaman Home Pengunjung
 
-### 2. CRUD Menu
-    Fitur ini digunakan untuk mengelola data menu yang dijual. Admin dapat melakukan hal berikut:
-    - Menambah menu baru.
-    - Melihat daftar menu.
-    - Mengubah data menu.
-    - Menghapus data menu.
-    Data menu yang dikelola meliputi nama menu, kategori, harga, deskripsi, gambar, dan status ketersediaan.
+Halaman home menampilkan identitas Omah Tengkleng Klangenan, banner utama, menu rekomendasi spesial, dan beberapa menu tersedia. Tampilan halaman menggunakan warna hijau agar sesuai dengan karakter website warung makan.
 
-### 3. Login 
-    Fitur login digunakan untuk mengamankan sistem sehingga hanya admin dan user/karyawan yang dapat mengakses fitur pengelolaan data.
+### 2. Halaman Menu Pengunjung
 
-### 4. Halaman Home Pengunjung
-    Halaman ini menampilkan Banner Utama dan Highlight Card Menu Special pada hari itu.
+Halaman menu menampilkan daftar menu yang tersedia, lengkap dengan gambar, nama menu, harga, deskripsi singkat, dan status ketersediaan.
 
-### 5. Halaman Menu Pengunjung
-    Halaman ini menampilkan daftar menu makanan dan minuman yang tersedia beserta harga dan deskripsinya, sehingga memudahkan pelanggan dalam melihat pilihan menu.
+### 3. Login
+
+Fitur login digunakan untuk membatasi akses ke halaman admin. Pengguna harus memasukkan email dan password yang valid.
+
+### 4. Dashboard Admin
+
+Dashboard menampilkan ringkasan informasi sistem, seperti total menu, menu tersedia, menu tidak tersedia, serta daftar menu terbaru.
+
+### 5. CRUD Menu
+
+Fitur kelola menu digunakan untuk:
+
+- Menambah menu baru.
+- Melihat daftar menu.
+- Mengubah data menu.
+- Menghapus menu.
+- Mengunggah gambar menu.
+- Mengatur status menu.
+- Mengarsipkan atau menonaktifkan menu.
+
+### 6. Manajemen Ketersediaan Menu
+
+Admin dapat mengubah status menu menjadi tersedia, tidak tersedia, atau arsip/nonaktif sesuai kondisi bahan dan operasional harian.
+
+### 7. Menu Spesial
+
+Admin dapat menandai satu menu sebagai menu spesial. Menu spesial ditampilkan pada bagian rekomendasi di halaman home.
+
+### 8. Manajemen User
+
+Admin dapat mengelola user melalui fitur:
+
+- Menambah user.
+- Melihat daftar user.
+- Mengubah data user.
+- Menghapus user.
+- Mengaktifkan atau menonaktifkan user.
+- Mengarsipkan dan memulihkan user.
 
 ## F. Struktur Menu
 
 ### 1. Menu Pengunjung
-    - Home
-    - Menu
+
+- Beranda
+- Menu
+- Login
 
 ### 2. Menu Admin
-    - Dashboard
-    - Menu
-    - User
+
+- Dashboard
+- Kelola Menu
+- Kelola User
+- Logout
 
 ## G. Kebutuhan Data
-    Data utama yang dibutuhkan dalam sistem ini adalah data menu dan data user. Seluruh data disimpan di database MySQL.
 
-### Data Menu
-    | Nama Field    |           Keterangan              |
-    | ------------- | --------------------------------- |
-    | id            | Kode unik menu (Primary Key)      |
-    | nama_menu     | Nama makanan atau minuman         |
-    | kategori      | Jenis menu (Makanan/Minuman)      |
-    | harga         | Harga menu dalam format numerik   |
-    | deskripsi     | Penjelasan singkat tentang menu   |
-    | gambar        | Path/lokasi file foto menu        |
-    | status        | Status ketersediaan               |
-    | created_by    | Akun yang membuat data            |
-    | updated_by    | Akun yang memperbaharui data      |
-    | is_special    | Penanda menu unggulan             |
-    | created_at    | Waktu data dibuat                 |
-    | updated_at    | Waktu data diperbarui             |
+Data utama yang digunakan dalam sistem ini disimpan di database MySQL.
 
-### Data UserRole
-    | Nama Field            |           Keterangan          |
-    | --------------------- | ----------------------------- |
-    | id                    | Kode unik userrole            |
-    | nama_role             | Nama role                     |
-    | keterangan            | Keterangan role               |
-    | created_at            | Waktu data dibuat             |
-    | updated_at            | Waktu data diperbarui         |
+### 1. Data Menu
 
-### Data User
-    | Nama Field            |           Keterangan          |
-    | --------------------- | ----------------------------- |
-    | id                    | Kode unik user                |
-    | name                  | Nama admin                    |
-    | email                 | Email untuk login             |
-    | email_verified_at     | -                             |
-    | password              | Password terenkripsi (Hash)   |
-    | role_id               | Role user                     |
-    | is_active             | Status keaktifan user         |
-    | remember_token        | -                             |
-    | created_at            | Waktu data dibuat             |
-    | updated_at            | Waktu data diperbarui         |
+| Field | Keterangan |
+| --- | --- |
+| id | Kode unik menu |
+| nama_menu | Nama makanan atau minuman |
+| kategori | Jenis menu |
+| harga | Harga menu |
+| deskripsi | Deskripsi menu |
+| gambar | Lokasi file gambar menu |
+| status | Status menu: tersedia, tidak tersedia, atau arsip |
+| is_special | Penanda menu spesial |
+| created_by | User yang membuat data |
+| updated_by | User yang memperbarui data |
+| created_at | Waktu data dibuat |
+| updated_at | Waktu data diperbarui |
+
+### 2. Data User
+
+| Field | Keterangan |
+| --- | --- |
+| id | Kode unik user |
+| name | Nama user |
+| email | Email login |
+| password | Password terenkripsi |
+| role_id | Relasi ke role user |
+| is_active | Status aktif, nonaktif, atau arsip |
+| remember_token | Token remember me |
+| created_at | Waktu data dibuat |
+| updated_at | Waktu data diperbarui |
+
+### 3. Data User Role
+
+| Field | Keterangan |
+| --- | --- |
+| id | Kode unik role |
+| nama_role | Nama role, misalnya admin atau user |
+| keterangan | Keterangan role |
+| created_at | Waktu data dibuat |
+| updated_at | Waktu data diperbarui |
 
 ## H. Kebutuhan Teknologi
-    Sistem ini dirancang menggunakan teknologi berikut:
-    | Komponen              |               Teknologi               |
-    | --------------------- | ------------------------------------- |
-    | Framework             | Laravel                               |
-    | Bahasa Pemrograman    | PHP                                   |
-    | Database              | MySQL                                 |
-    | Frontend              | Blade Template, HTML, CSS, JavaScript |
-    | Styling Admin         | AdminLTE                              |
-    | Web Server Lokal      | XAMPP atau server Laravel artisan     |
-    | Autentikasi           | Laravel Authentication                |
-    Laravel digunakan untuk mengelola routing, controller, model, view, validasi, autentikasi login, dan proses CRUD data menu. MySQL digunakan sebagai tempat penyimpanan data.
+
+| Komponen | Teknologi |
+| --- | --- |
+| Framework | Laravel |
+| Bahasa Pemrograman | PHP |
+| Database | MySQL/MariaDB |
+| Template | Blade |
+| Tema Admin | AdminLTE |
+| Frontend | HTML, CSS, JavaScript |
+| Web Server Lokal | XAMPP atau `php artisan serve` |
+| Autentikasi | Laravel Auth manual menggunakan model User |
 
 ## I. Kebutuhan Fungsional
-    Kebutuhan fungsional sistem adalah sebagai berikut:
-    - Sistem dapat menampilkan halaman home untuk pengunjung.
-    - Sistem dapat menampilkan daftar menu yang tersedia kepada pengunjung.
-    - Sistem dapat menampilkan informasi harga dan deskripsi menu.
-    - Sistem dapat menyediakan halaman login admin/user.
-    - Sistem dapat membatasi akses halaman admin hanya untuk pengguna yang sudah login.
-    - Sistem dapat menampilkan dashboard admin.
-    - Sistem dapat menambahkan data menu baru.
-    - Sistem dapat menampilkan daftar seluruh data menu.
-    - Sistem dapat mengubah data menu.
-    - Sistem dapat menghapus data menu.
-    - Sistem dapat mengatur status ketersediaan menu.
+
+- Sistem dapat menampilkan halaman home pengunjung.
+- Sistem dapat menampilkan halaman daftar menu.
+- Sistem dapat menampilkan menu yang tersedia saja kepada pengunjung.
+- Sistem dapat menampilkan menu spesial di halaman home.
+- Sistem dapat menyediakan login admin/user.
+- Sistem dapat membatasi halaman admin hanya untuk user yang sudah login.
+- Sistem dapat menampilkan dashboard admin.
+- Sistem dapat menambah data menu.
+- Sistem dapat mengubah data menu.
+- Sistem dapat menghapus data menu.
+- Sistem dapat mengubah status ketersediaan menu.
+- Sistem dapat mengarsipkan atau menonaktifkan menu.
+- Sistem dapat mengelola data user.
+- Sistem dapat mengaktifkan, menonaktifkan, mengarsipkan, dan memulihkan user.
 
 ## J. Kebutuhan Non-Fungsional
-    Kebutuhan non-fungsional sistem adalah sebagai berikut:
-    - Website mudah digunakan oleh admin/user dan pengunjung.
-    - Data menu tersimpan dengan rapi di database.
-    - Halaman admin dilindungi dengan autentikasi login.
-    - Informasi menu dapat diakses dengan cepat oleh pengunjung.
-    - Sistem menggunakan database MySQL untuk menyimpan data secara terstruktur.
-    - Sistem dibangun menggunakan Laravel agar pengembangan lebih rapi dengan pola MVC.
 
-## K. Rancangan Database MySQL
+- Tampilan pengunjung menggunakan nuansa hijau dan sesuai dengan karakter website warung makan.
+- Halaman admin menggunakan AdminLTE agar mudah digunakan.
+- Data tersimpan di database MySQL secara terstruktur.
+- Password user disimpan dalam bentuk hash.
+- Website dapat dijalankan secara lokal menggunakan XAMPP dan `php artisan serve`.
+- Halaman tetap dapat dibuka walaupun data menu masih kosong.
 
-### 1. Tabel users
-    Tabel `users` digunakan untuk menyimpan data admin yang dapat login ke sistem.
-    | Field             |   Tipe Data   |       Keterangan          |
-    | ----------------- | ------------- | ------------------------- |
-    | id                | BIGINT=       | Primary key               |
-    | name              | VARCHAR(255)  | Nama admin                |
-    | email             | VARCHAR(255)  | Email admin               |
-    | email_verified_at | TIMESTAMP     | -                         |
-    | password          | VARCHAR(255)  | Password terenkripsi      |
-    | role_id           | SMALLINT(5)   | Role user                 |
-    | is_active         | TINYINT(1)    | Status keaktifan user     |
-    | remember_token    | VARCHAR(100)  | -                         |
-    | created_at        | TIMESTAMP     | Waktu data dibuat         |
-    | updated_at        | TIMESTAMP     | Waktu data diperbarui     |
+## K. Rancangan Database
 
-### 3. Tabel UserRole
-    Tabel `userrole` digunakan untuk menyimpan data master role ke sistem.
-    | Nama Field            |   Tipe Data    |      Keterangan          |
-    | --------------------- | -------------- |------------------------- |
-    | id                    | SMALLINT(5)    | Kode unik userrole       |
-    | nama_role             | VARCHAR(255)   | Nama role                |
-    | keterangan            | VARCHAR(255)   | Keterangan role          |
-    | created_at            | TIMESTAMP      | Waktu data dibuat        |
-    | updated_at            | TIMESTAMP      | Waktu data diperbarui    |
+### 1. Tabel `menus`
 
-### 2. Tabel menus
-    Tabel `menus` digunakan untuk menyimpan data menu makanan dan minuman.
-    | Field      |   Tipe Data  |   Null    |   Keterangan              |
-    | ---------- | ------------ | --------- | ------------------------- |
-    | id         | SMALLINT(5)  | No        | Primary key               |
-    | nama_menu  | VARCHAR(255) | No        | Nama makanan/minuman      |
-    | kategori   | VARCHAR(100) | No        | Makanan atau Minuman      |
-    | harga      | DECIMAL(10,2)| No        | Harga menu                |
-    | deskripsi  | TEXT         | Yes       | Penjelasan detail menu    |
-    | gambar     | VARCHAR(255) | Yes       | Path/lokasi file foto menu|
-    | status     | TINYINT(1)   | No        | Status ketersediaan harian|
-    | created_by | VARCHAR(255) | Yes       | Akun yang membuat data    |
-    | updated_by | VARCHAR(255) | Yes       | Akun yang update data     |
-    | is_special | TINYINT(1)   | No        | Penanda menu spesial      |
-    | created_at | TIMESTAMP    | Yes       | Waktu data dibuat         |
-    | updated_at | TIMESTAMP    | Yes       | Waktu data diupdate       |
+| Field | Tipe Data | Keterangan |
+| --- | --- | --- |
+| id | BIGINT UNSIGNED | Primary key |
+| nama_menu | VARCHAR(255) | Nama menu |
+| kategori | VARCHAR(100) | Kategori menu |
+| harga | DECIMAL(10,2) | Harga menu |
+| deskripsi | TEXT | Deskripsi menu |
+| gambar | VARCHAR(255) | Path gambar |
+| status | BOOLEAN/INTEGER | 1 tersedia, 0 tidak tersedia, -1 arsip |
+| is_special | BOOLEAN | 1 menu spesial, 0 menu biasa |
+| created_by | VARCHAR(255) | Pembuat data |
+| updated_by | VARCHAR(255) | Pengubah data |
+| created_at | TIMESTAMP | Waktu dibuat |
+| updated_at | TIMESTAMP | Waktu diperbarui |
+
+### 2. Tabel `users`
+
+| Field | Tipe Data | Keterangan |
+| --- | --- | --- |
+| id | BIGINT UNSIGNED | Primary key |
+| name | VARCHAR(255) | Nama user |
+| email | VARCHAR(255) | Email login |
+| password | VARCHAR(255) | Password hash |
+| role_id | SMALLINT UNSIGNED | Relasi ke `userrole` |
+| is_active | INTEGER/BOOLEAN | 1 aktif, 0 nonaktif, -1 arsip |
+| remember_token | VARCHAR(100) | Token login |
+| created_at | TIMESTAMP | Waktu dibuat |
+| updated_at | TIMESTAMP | Waktu diperbarui |
+
+### 3. Tabel `userrole`
+
+| Field | Tipe Data | Keterangan |
+| --- | --- | --- |
+| id | SMALLINT UNSIGNED | Primary key |
+| nama_role | VARCHAR(255) | Nama role |
+| keterangan | VARCHAR(255) | Keterangan role |
+| created_at | TIMESTAMP | Waktu dibuat |
+| updated_at | TIMESTAMP | Waktu diperbarui |
 
 ## L. Rancangan Laravel
-    Rancangan struktur Laravel yang digunakan dalam sistem ini adalah sebagai berikut:
-    | Komponen Laravel  |                  Fungsi                   |
-    | ----------------- | ----------------------------------------- |
-    | Route             | Mengatur alamat halaman website           |
-    | Controller        | Mengatur proses logika aplikasi           |
-    | Model             | Menghubungkan aplikasi ke tabel database  |
-    | Migration         | Membuat struktur tabel MySQL              |
-    | Blade View        | Menampilkan halaman website               |
-    | Middleware Auth   | Melindungi halaman admin                  |
 
-### Route yang Dirancang
-    | URL                                  | Akses       | Keterangan                          |
-    | ------------------------------------ | ----------- | ----------------------------------- |
-    | `/`                                  | Pengunjung  | Halaman home                        |
-    | `/menu`                              | Pengunjung  | Halaman daftar menu                 |
-    | `/login`                             | User/Admin  | Halaman login admin                 |
-    | `/logout`                            | User/Admin  | Proses logout admin                 |
-    | `/admin/dashboard`                   | User/Admin  | Dashboard admin                     |
-    | `/admin/menus`                       | User/Admin  | Halaman kelola menu                 |
-    | `/admin/menus/create`                | User/Admin  | Form tambah menu                    |
-    | `/admin/menus/{menu}/edit`           | User/Admin  | Form edit menu                      |
-    | `/admin/menus/{menu}/toggle-status`  | User/Admin  | Mengubah status menu tersedia/tidak |
-    | `/admin/menus/{menu}/toggle-special` | User/Admin  | Mengubah status menu spesial        |
-    | `/admin/menus/{menu}/deactivate`     | Admin       | Menonaktifkan menu                  |
-    | `/admin/users`                       | Admin       | Halaman kelola user                 |
-    | `/admin/users/create`                | Admin       | Form tambah user                    |
-    | `/admin/users/{user}/edit`           | Admin       | Form edit user                      |
-    | `/admin/users/{user}/deactivate`     | Admin       | Menonaktifkan user                  |
-    | `/admin/users/{user}/archive`        | Admin       | Mengarsipkan user                   |
-    | `/admin/users/{user}/restore`        | Admin       | Mengembalikan user dari arsip       |
+### Model
 
-## M. Alur Penggunaan Sistem
+- `Menu`
+- `User`
+- `Role`
 
-### 1. Alur Admin
-    1. Admin membuka halaman login.
-    2. Admin memasukkan email dan password.
-    3. Sistem memverifikasi data login.
-    4. Admin masuk ke dashboard.
-    5. Admin mengelola data menu (menambah, mengubah, menghapus, dan mengatur ketersediaan menu) melalui halaman Menu.
-    6. Admin mengelola data user (menambah, mengubah, menghapus) melalui halaman User.
+### Controller
 
-### 2. Alur User
-    1. Admin membuka halaman login.
-    2. Admin memasukkan email dan password.
-    3. Sistem memverifikasi data login.
-    4. Admin masuk ke dashboard.
-    5. Admin mengelola data ketersediaan menu melalui halaman Menu.
+- `HomeController`
+- `AuthController`
+- `Admin\DashboardController`
+- `Admin\MenuController`
+- `Admin\UserController`
 
-### 3. Alur Pengunjung
-    1. Pengunjung membuka halaman website.
-    2. Pengunjung melihat halaman home.
-    3. Pengunjung membuka halaman menu.
-    4. Sistem menampilkan daftar menu yang tersedia.
-    5. Pengunjung melihat informasi nama menu, harga, dan deskripsi menu.
+### View
 
-## N. Batasan Sistem
-    Batasan sistem pada perancangan ini adalah sebagai berikut:
-    - Sistem berfokus pada pengelolaan dan penampilan data menu.
-    - Sistem belum mencakup fitur pemesanan online.
-    - Sistem belum mencakup fitur pembayaran.
-    - Pengelolaan data hanya dapat dilakukan oleh admin.
+- `resources/views/layouts/public.blade.php`
+- `resources/views/home.blade.php`
+- `resources/views/menu/index.blade.php`
+- `resources/views/auth/login.blade.php`
+- `resources/views/admin/dashboard.blade.php`
+- `resources/views/admin/menus`
+- `resources/views/admin/users`
 
-## O. Output yang Diharapkan
-    Output yang diharapkan dari sistem ini adalah website informasi menu Omah Tengkleng Klangenan berbasis Laravel dan MySQL yang memiliki halaman pengunjung dan halaman admin. Admin dapat mengelola data menu secara terstruktur melalui fitur CRUD, sedangkan pengunjung dapat melihat daftar menu yang tersedia beserta harga dan deskripsinya.
+## M. Route Sistem
+
+| URL | Akses | Keterangan |
+| --- | --- | --- |
+| `/` | Pengunjung | Halaman home |
+| `/menu` | Pengunjung | Halaman daftar menu |
+| `/login` | Guest | Halaman login |
+| `/logout` | User login | Logout |
+| `/admin/dashboard` | User login | Dashboard admin |
+| `/admin/menus` | User login | Daftar menu |
+| `/admin/menus/create` | User login | Tambah menu |
+| `/admin/menus/{menu}/edit` | User login | Edit menu |
+| `/admin/menus/{menu}/toggle-status` | User login | Ubah status menu |
+| `/admin/menus/{menu}/toggle-special` | User login | Ubah menu spesial |
+| `/admin/menus/{menu}/deactivate` | User login | Arsip/nonaktifkan menu |
+| `/admin/users` | User login | Daftar user |
+| `/admin/users/create` | User login | Tambah user |
+| `/admin/users/{user}/edit` | User login | Edit user |
+| `/admin/users/{user}/deactivate` | User login | Aktif/nonaktif user |
+| `/admin/users/{user}/archive` | User login | Arsip user |
+| `/admin/users/{user}/restore` | User login | Pulihkan user |
+
+## N. Alur Penggunaan
+
+### 1. Alur Pengunjung
+
+1. Pengunjung membuka halaman home.
+2. Pengunjung melihat informasi warung dan menu spesial.
+3. Pengunjung membuka halaman menu.
+4. Sistem menampilkan daftar menu tersedia.
+
+### 2. Alur Admin/User
+
+1. Admin/user membuka halaman login.
+2. Admin/user memasukkan email dan password.
+3. Sistem memverifikasi akun.
+4. Admin/user masuk ke dashboard.
+5. Admin/user mengelola data menu atau user sesuai kebutuhan.
+
+## O. Batasan Sistem
+
+- Sistem belum menyediakan pemesanan online.
+- Sistem belum menyediakan pembayaran online.
+- Sistem berfokus pada informasi menu, pengelolaan menu, dan pengelolaan user.
+- Website dijalankan untuk kebutuhan lokal/tugas menggunakan XAMPP dan Laravel.
+
+## P. Output yang Diharapkan
+
+Output yang diharapkan adalah website informasi menu warung makan berbasis Laravel dan MySQL dengan tampilan publik bernuansa hijau, halaman admin berbasis AdminLTE, fitur login, CRUD menu, pengaturan status menu, menu spesial, dan manajemen user.

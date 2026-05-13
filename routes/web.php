@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::patch('/users/{user}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
     Route::patch('/users/{user}/archive', [UserController::class, 'archive'])->name('users.archive');
     Route::patch('/users/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->except(['show']);
+    Route::resource('roles', RoleController::class)->except(['show']);;
 });

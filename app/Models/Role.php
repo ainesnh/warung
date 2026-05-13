@@ -10,7 +10,7 @@ class Role extends Model
     protected $table = 'userrole';
 
     protected $fillable = [
-        'name',
+        'nama_role',
         'keterangan',
     ];
 

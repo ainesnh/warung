@@ -34,7 +34,7 @@
             <div class="mb-2">
                 <span class="badge text-white"
                     style="background: #16a34a; padding: 8px 16px; border-radius: 50px; font-size: .75rem; letter-spacing: 0.5px;
-                    "> ⭐ Rekomendasi Spesial
+                    "> Rekomendasi Spesial
                 </span>
             </div>
 
