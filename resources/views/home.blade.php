@@ -1,12 +1,15 @@
 @extends('layouts.public')
 
-@section('title', 'Home - ' . config('app.name'))
+@section('title', 'Home - ' . ($settings['app_name'] ?? config('app.name')))
 
 @section('content')
     <!-- Hero Section -->
-    <section class="site-hero" style="background: linear-gradient(rgba(20, 50, 20, 0.7), rgba(20, 50, 20, 0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; padding: 140px 0; color: white;">
+    <section class="site-hero" style="background: linear-gradient(rgba(20, 50, 20, 0.7), rgba(20, 50, 20, 0.7)), url('{{ isset($settings['banner_home_path']) ? asset('uploads/settings/' . $settings['banner_home_path']) : 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' }}'); background-size: cover; background-position: center; padding: 140px 0; color: white;">
         <div class="container text-center">
-            <h1 class="display-4" style="font-weight: 800; margin-bottom: 20px; letter-spacing: -1px;">Cita Rasa Autentik <br><span style="color: #4ade80;">Omah Tengkleng Klangenan</span></h1>
+            <h1 class="display-4" style="font-weight: 800; margin-bottom: 20px; letter-spacing: -1px;">
+                {!! nl2br(e($settings['title_banner_home'] ?? '')) !!}  di
+                <span style="color: #4ade80;">{{ $settings['app_name'] ?? config('app.name') }}</span>
+            </h1>
             <p class="lead" style="font-size: 1.25rem; margin-bottom: 40px; max-width: 750px; margin-left: auto; margin-right: auto; color: #e2e8f0;">
                 Menghadirkan warisan resep nusantara dengan kelezatan daging kambing pilihan dan racikan rempah hijau alami yang meresap hingga ke tulang.
             </p>

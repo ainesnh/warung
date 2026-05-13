@@ -8,12 +8,13 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        $menus = $this->getAvailableMenus(limit: 6);
-        $specialMenus = $this->getSpecialMenus(limit: 1);
+        $settings = \App\Models\Setting::pluck('value', 'key'); // Ambil semua setting
+        $specialMenus = Menu::where('is_special', 1)->get();
+        $menus = Menu::where('is_special', 0)->take(6)->get();
 
-        return view('home', compact('menus', 'specialMenus'));
+        return view('home', compact('settings', 'specialMenus', 'menus'));
     }
 
     public function menu(): View

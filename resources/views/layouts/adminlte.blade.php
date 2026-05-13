@@ -5,15 +5,11 @@
     
     @include('layouts.adminlte.partials.head')
     <style>
-        /* --- TEMA CUSTOM OMAH TENGKLENG --- */
-        
-        /* 1. Reset Warna Hover Toggle (Hapus Biru) */
         .main-header .sidebar-toggle:hover {
             background-color: rgba(0,0,0,0.1) !important;
             color: #4ade80 !important;
         }
 
-        /* 2. Pengaturan Header & Sidebar Terbuka */
         .main-header .logo { 
             width: 230px !important; 
             background-color: #04392b !important; 

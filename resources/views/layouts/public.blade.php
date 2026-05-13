@@ -112,7 +112,7 @@
 
     <footer class="footer">
         <div class="container text-center">
-            <p class="mb-0 small"><strong>{{ config('app.name') }}</strong> &copy; {{ date('Y') }}</p>
+            <p class="mb-0 small"><strong>{{ config('app.name') }}</strong> &copy; ANH {{ date('Y') }}</p>
         </div>
     </footer>
 

@@ -4,11 +4,15 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="site-hero" style="background: linear-gradient(rgba(20, 50, 20, 0.8), rgba(20, 50, 20, 0.8)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; padding: 80px 0; color: white;">
+    <section class="site-hero" style="background: linear-gradient(rgba(20, 50, 20, 0.8), rgba(20, 50, 20, 0.8)), url('{{ isset($settings['banner_menu_path']) ? asset('uploads/settings/' . $settings['banner_menu_path']) : 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' }}'); background-size: cover; background-position: center; padding: 80px 0; color: white;">
         <div class="container text-center">
-            <h1 class="display-4" style="font-weight: 800; margin-bottom: 10px;">Daftar Menu</h1>
+            <h1 class="display-4" style="font-weight: 800; margin-bottom: 10px;">
+                {{ $settings['title_banner_menu'] ?? '' }}
+            </h1>
             <div style="width: 60px; height: 4px; background: #4ade80; margin: 0 auto 20px auto; border-radius: 10px;"></div>
-            <p class="lead" style="color: #e2e8f0; max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Eksplorasi ragam sajian autentik kami.</p>
+            <p class="lead" style="color: #e2e8f0; max-width: 600px; margin: 0 auto; font-size: 1.1rem;">
+                Eksplorasi ragam sajian autentik di {{ $appName }}.
+            </p>
         </div>
     </section>
 

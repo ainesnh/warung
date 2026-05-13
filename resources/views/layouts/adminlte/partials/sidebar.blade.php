@@ -22,16 +22,16 @@
             <li class="header" style="color: rgba(255,255,255,0.3);">MASTER</li>
         
             @if(auth()->user()->isAdmin())
-            <li class="{{ request()->routeIs('admin.roles.*') ? 'active' : '' }}">
-                <a href="{{ route('admin.roles.index') }}">
-                    <i class="fa fa-id-badge"></i></i> <span>User Role</span>
-                </a>
-            </li>
-            <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                <a href="{{ route('admin.users.index') }}">
-                    <i class="fa fa-users"></i></i> <span>User</span>
-                </a>
-            </li>
+                <li class="{{ request()->routeIs('admin.roles.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.roles.index') }}">
+                        <i class="fa fa-id-badge"></i></i> <span>User Role</span>
+                    </a>
+                </li>
+                <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.users.index') }}">
+                        <i class="fa fa-users"></i></i> <span>User</span>
+                    </a>
+                </li>
             @endif
 
             <li class="{{ request()->routeIs('admin.menus.*') ? 'active' : '' }}">
@@ -46,6 +46,13 @@
                     <i class="fa fa-globe"></i> <span>Lihat Website</span>
                 </a>
             </li>
+            @if(auth()->user()->isAdmin())
+                <li class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.settings.index') }}">
+                        <i class="fa fa-sliders"></i> <span>Setting Website</span>
+                    </a>
+                </li>
+            @endif
 
             {{-- MENU LOGOUT DI BAGIAN BAWAH --}}
             <li class="header" style="color: rgba(255,255,255,0.3);">AKUN</li>
