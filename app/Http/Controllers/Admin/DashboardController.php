@@ -15,7 +15,7 @@ class DashboardController extends Controller
             'menuTersedia' => Menu::where('status', 1)->count(),
             'menuTidakTersedia' => Menu::where('status', 0)->count(),
             'menuTerbaru' => Menu::where('status', '<>', -1)
-                                    ->latest('menu_id')
+                                    ->latest('id')
                                     ->limit(5)
                                     ->get(),
         ]);
