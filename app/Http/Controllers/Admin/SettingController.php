@@ -42,7 +42,7 @@ class SettingController extends Controller
 
     private function uploadImage($file, $settingKey)
     {
-        $destinationPath = public_path('uploads/settings');
+        $destinationPath = dirname(base_path()) . '/uploads/settings';
         
         if (!File::isDirectory($destinationPath)) {
             File::makeDirectory($destinationPath, 0777, true, true);
