@@ -135,7 +135,7 @@ class MenuController extends Controller
         }
 
         $file = $request->file('gambar');
-        File::ensureDirectoryExists(public_path('uploads/menu'));
+        File::ensureDirectoryExists(base_path('uploads/menu'));
 
         $baseName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $name = time() . '-' . Str::slug($baseName) . '.' . $file->getClientOriginalExtension();

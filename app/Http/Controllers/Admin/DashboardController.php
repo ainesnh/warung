@@ -14,7 +14,10 @@ class DashboardController extends Controller
             'totalMenu' => Menu::count(),
             'menuTersedia' => Menu::where('status', 1)->count(),
             'menuTidakTersedia' => Menu::where('status', 0)->count(),
-            'menuTerbaru' => Menu::latest()->limit(5)->get(),
+            'menuTerbaru' => Menu::where('status', '<>', -1)
+                                    ->latest('menu_id')
+                                    ->limit(5)
+                                    ->get(),
         ]);
     }
 }
